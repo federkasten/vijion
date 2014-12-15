@@ -16,7 +16,7 @@
       :data (->> (.. img getRaster getDataBuffer getData)
                  (map #(bit-and % 0xff))
                  (partition-all 3)
-                 (map reverse))})))
+                 (mapv reverse))})))
 
 (def ubyte (fn [^long val]
              (if (>= val 128)
