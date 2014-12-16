@@ -1,6 +1,6 @@
 # vijion
 
-Experimental implementation of Computer Vision and Image Processing written in pure Clojure (WIP)
+Experimental implementation of Computer Vision examples written in pure Clojure
 
 ## Usage
 
