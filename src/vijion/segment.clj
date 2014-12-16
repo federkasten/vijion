@@ -1,9 +1,9 @@
 (ns vijion.segment
   (:require [vijion.util :refer :all]
-            [jordanlewis.data.union-find :as uf]))
+            [vijion.util.dsf :as dsf-util]))
 
 (def ^:const sigma 0.5)
-(def ^:const kappa 50)
+(def ^:const kappa 500)
 (def ^:const min-value 20)
 
 (defn- square
@@ -51,20 +51,12 @@
   [edges]
   (sort-by :w edges))
 
-(defn uf-count
-  [dsf x len]
-  (/ len (count dsf))
-  ;; (-> (.elt-map dsf)
-  ;;     (get x)
-  ;;     :value)
-  )
-
 (def init-threashold (/ kappa 1))
 
 (defn segment
   [sorted-edges length]
   (loop [e (first sorted-edges)
-         dsf (apply uf/union-find (range length))
+         dsf (apply dsf-util/make-dsf (range length))
          threashold {}
          rest-edges (rest sorted-edges)]
     (if e
@@ -75,11 +67,11 @@
         (if (and (not= ha hb)
                  (< (:w e) ta)
                  (< (:w e) tb))
-          (let [new-dsf (uf/union dsf ha hb)
+          (let [new-dsf (dsf-util/union dsf ha hb)
                 new-a (new-dsf ha)]
             (recur (first rest-edges)
                    new-dsf
-                   (conj threashold {new-a (+ (:w e) (/ kappa (uf-count new-dsf ha length)))})
+                   (conj threashold {new-a (+ (:w e) (/ kappa (dsf-util/size new-dsf new-a)))})
                    (rest rest-edges)))
           (recur (first rest-edges)
                  dsf
