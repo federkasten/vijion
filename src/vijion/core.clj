@@ -1,6 +1,5 @@
-(ns clj-img.core
-  (:require [clojure.java.io :as io]
-            [clj-img.gray])
+(ns vijion.core
+  (:require [clojure.java.io :as io])
   (:import [javax.imageio ImageIO]
            [java.awt.image BufferedImage]
            [java.io ByteArrayInputStream]

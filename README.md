@@ -1,14 +1,16 @@
-# clj-img
+# vijion
 
-A Clojure library designed to ... well, that part is up to you.
+Experimental implementation of Computer Vision and Image Processing written in pure Clojure (WIP)
 
 ## Usage
 
-FIXME
+TODO
 
 ## License
 
-Copyright © 2014 FIXME
+Copyright 2014 [Takashi AOKI][tak.sh]
 
-Distributed under the Eclipse Public License either version 1.0 or (at
-your option) any later version.
+Licensed under the [Apache License, Version 2.0][apache-license-2.0].
+
+[tak.sh]: http://tak.sh
+[apache-license-2.0]: http://www.apache.org/licenses/LICENSE-2.0.html

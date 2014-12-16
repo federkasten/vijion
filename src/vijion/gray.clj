@@ -1,4 +1,4 @@
-(ns clj-img.gray)
+(ns vijion.gray)
 
 (defn rgb->gray
   [image]

@@ -1,4 +1,4 @@
-(ns clj-img.filter)
+(ns vijion.filter)
 
 ;;; utility
 
