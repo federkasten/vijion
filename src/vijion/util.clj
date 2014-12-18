@@ -1,6 +1,6 @@
 (ns vijion.util)
 
-(def ^:const block-unit 3000)
+(def ^:const block-unit 10000)
 
 (def ^:const num-processors (max 1 (.. Runtime getRuntime availableProcessors)))
 
@@ -10,6 +10,15 @@
    (let [e (first @queue)]
      (alter queue rest)
      e)))
+
+(defn pick-fn
+  [data ^long len ^long width]
+  (fn [^long idx ^long ox ^long oy]
+    (let [i (+ idx ox (* width oy))]
+      (cond
+       (< i 0) nil
+       (< i len) (nth data i)
+       :else nil))))
 
 (defn pick
   [data len width idx ox oy]

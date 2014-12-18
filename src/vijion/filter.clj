@@ -39,19 +39,23 @@
           hs (quot s 2)
           ws (* s s)
           indices (range (- hs) (inc hs))
-          offsets (apply concat (map (fn [y] (map (fn [x] [x y]) indices)) indices))
-          len (count d)]
+          offsets (doall (vec (for [oy indices
+                                    ox indices]
+                                [(long ox) (long oy)])))
+          len (count d)
+          px (pick-fn d len w)]
       (assoc gray-image :data
              (loop [idx 0
                     res []]
                (if (< idx len)
                  (recur (inc idx)
-                        (conj res (let [wp (map (fn [[ox oy]] (pick d len w idx ox oy)) offsets)]
+                        (conj res (let [wp (map (fn [[ox oy]] (px idx ox oy)) offsets)]
                                     (if (some nil? wp)
                                       0
-                                      (-> (int (reduce + (map (fn [[p m]] (* p m)) (partition 2 (interleave wp mat)))))
+                                      (-> (long (reduce + (map * wp mat)))
                                           Math/abs
-                                          (min 255))))))
+                                          (min 255))
+                                      ))))
                  res))))))
 
 (defn- convolve*
@@ -63,7 +67,7 @@
              (conj res (let [wp (map (fn [[ox oy]] (pick data len width idx ox oy)) offsets)]
                          (if (some nil? wp)
                            0
-                           (-> (int (reduce + (map (fn [[p m]] (* p m)) (partition 2 (interleave wp mat)))))
+                           (-> (long (reduce + (map * wp mat)))
                                Math/abs
                                (min 255))))))
       res)))
@@ -78,7 +82,9 @@
           hs (quot s 2)
           ws (* s s)
           indices (range (- hs) (inc hs))
-          offsets (apply concat (map (fn [y] (map (fn [x] [x y]) indices)) indices))
+          offsets (doall (vec (for [oy indices
+                                    ox indices]
+                                [(long ox) (long oy)])))
           len (count data)
           blocks (range 0 len block-unit)
           window-buf-blocks (partition-all 2 (interleave blocks (conj (vec (drop 1 blocks)) len)))
