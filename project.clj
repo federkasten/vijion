@@ -20,8 +20,8 @@
                 :source-paths ["src/cljs" "target/gen-src/cljs"]
                 :jar true
                 :compiler {:output-dir "www/js/dev"
-                           :output-to "www/js/view_dev.js"
-                           :source-map "www/js/view_dev.js.map"
+                           :output-to "www/js/vijion_dev.js"
+                           :source-map "www/js/vijion_dev.js.map"
                            :optimizations :none
                            :pretty-print true}}
                :prod
@@ -29,7 +29,7 @@
                 :source-paths ["src/cljs" "target/gen-src/cljs"]
                 :jar true
                 :compiler {:output-dir "www/js/prod"
-                           :output-to "www/js/view.js"
-                           :source-map "www/js/view.js.map"
+                           :output-to "www/js/vijion.js"
+                           :source-map "www/js/vijion.js.map"
                            :optimizations :advanced
                            :pretty-print true}}}})
