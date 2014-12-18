@@ -2,8 +2,12 @@
 
 (def ^:const block-unit 10000)
 
+#+clj
 (def ^:const num-processors (max 1 (.. Runtime getRuntime availableProcessors)))
+#+cljs
+(def ^:const num-processors 1)
 
+#+clj
 (defn pop-queue!
   [queue]
   (dosync
@@ -11,9 +15,14 @@
      (alter queue rest)
      e)))
 
+#+cljs
+(defn pop-queue!
+  [queue]
+  nil)
+
 (defn pick-fn
-  [data ^long len ^long width]
-  (fn [^long idx ^long ox ^long oy]
+  [data len width]
+  (fn [idx ox oy]
     (let [i (+ idx ox (* width oy))]
       (cond
        (< i 0) nil
@@ -27,3 +36,7 @@
      (< i 0) nil
      (< i len) (nth data i)
      :else nil)))
+
+(def abs
+  #+clj #(Math/abs %)
+  #+cljs #(.abs js/Math %))

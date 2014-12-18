@@ -1,5 +1,5 @@
 (ns vijion.filter
-  (:require [vijion.util :refer :all]))
+  (:require [vijion.util :refer [pop-queue! pick-fn pick block-unit num-processors abs]]))
 
 ;;; convert gray-scale color
 
@@ -21,11 +21,11 @@
                                 -1 -3 -4 -3 -1]})
 
 (def gradient-filter {:size 5
-                      :matrix [1/25 1/25 1/25 1/25 1/25
-                               1/25 1/25 1/25 1/25 1/25
-                               1/25 1/25 1/25 1/25 1/25
-                               1/25 1/25 1/25 1/25 1/25
-                               1/25 1/25 1/25 1/25 1/25]})
+                      :matrix [(/ 1 25) (/ 1 25) (/ 1 25) (/ 1 25) (/ 1 25)
+                               (/ 1 25) (/ 1 25) (/ 1 25) (/ 1 25) (/ 1 25)
+                               (/ 1 25) (/ 1 25) (/ 1 25) (/ 1 25) (/ 1 25)
+                               (/ 1 25) (/ 1 25) (/ 1 25) (/ 1 25) (/ 1 25)
+                               (/ 1 25) (/ 1 25) (/ 1 25) (/ 1 25) (/ 1 25)]})
 
 ;;; convolve
 
@@ -53,11 +53,12 @@
                                     (if (some nil? wp)
                                       0
                                       (-> (long (reduce + (map * wp mat)))
-                                          Math/abs
+                                          abs
                                           (min 255))
                                       ))))
                  res))))))
 
+#+clj
 (defn- convolve*
   [data len width mat offsets start end]
   (loop [idx start
@@ -68,10 +69,11 @@
                          (if (some nil? wp)
                            0
                            (-> (long (reduce + (map * wp mat)))
-                               Math/abs
+                               abs
                                (min 255))))))
       res)))
 
+#+clj
 (defn parallel-gray-convolve
   [image-filter gray-image]
   (when (odd? (:size image-filter))
@@ -105,7 +107,9 @@
 (def laplacian (partial gray-convolve laplacian-filter))
 (def gradient (partial gray-convolve gradient-filter))
 
+#+clj
 (def parallel-laplacian (partial parallel-gray-convolve laplacian-filter))
+#+clj
 (def parallel-gradient (partial parallel-gray-convolve gradient-filter))
 
 ;;; simple implementation of laplacian filter
@@ -143,6 +147,6 @@
                                                 (* (nth mat 6) p20)
                                                 (* (nth mat 7) p21)
                                                 (* (nth mat 8) p22)))
-                                        Math/abs
+                                        abs
                                         (min 255))))))
                res)))))
