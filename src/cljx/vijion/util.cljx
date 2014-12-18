@@ -7,17 +7,14 @@
 #+cljs
 (def ^:const num-processors 1)
 
-#+clj
 (defn pop-queue!
   [queue]
+  #+clj
   (dosync
    (let [e (first @queue)]
      (alter queue rest)
-     e)))
-
-#+cljs
-(defn pop-queue!
-  [queue]
+     e))
+  #+cljs
   nil)
 
 (defn pick-fn
