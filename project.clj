@@ -7,7 +7,8 @@
   :plugins [[lein-cljsbuild "1.0.3"]
             [com.keminglabs/cljx "0.5.0" :exclusions [org.clojure/clojure]]]
   :source-paths ["src/clj" "src/cljs" "target/gen-src/clj" "target/gen-src/cljs"]
-  :profiles {:dev {:dependencies [[org.clojure/clojurescript "0.0-2496"]]}}
+  :profiles {:dev {:dependencies [[org.clojure/clojurescript "0.0-2496"]
+                                  [domina "1.0.3"]]}}
   :cljx {:builds [{:source-paths ["src/cljx"]
                    :output-path "target/gen-src/clj"
                    :rules :clj}
@@ -19,17 +20,17 @@
                {:id "dev"
                 :source-paths ["src/cljs" "target/gen-src/cljs"]
                 :jar true
-                :compiler {:output-dir "www/js/dev"
-                           :output-to "www/js/vijion_dev.js"
-                           :source-map "www/js/vijion_dev.js.map"
+                :compiler {:output-dir "html/js/dev"
+                           :output-to "html/js/vijion_dev.js"
+                           :source-map "html/js/vijion_dev.js.map"
                            :optimizations :none
                            :pretty-print true}}
                :prod
                {:id "prod"
                 :source-paths ["src/cljs" "target/gen-src/cljs"]
                 :jar true
-                :compiler {:output-dir "www/js/prod"
-                           :output-to "www/js/vijion.js"
-                           :source-map "www/js/vijion.js.map"
+                :compiler {:output-dir "html/js/prod"
+                           :output-to "html/js/vijion.js"
+                           :source-map "html/js/vijion.js.map"
                            :optimizations :advanced
                            :pretty-print true}}}})
