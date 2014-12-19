@@ -61,17 +61,19 @@
 #+clj
 (defn- convolve*
   [data len width mat offsets start end]
-  (loop [idx start
-         res []]
-    (if (< idx end)
-      (recur (inc idx)
-             (conj res (let [wp (map (fn [[ox oy]] (pick data len width idx ox oy)) offsets)]
-                         (if (some nil? wp)
-                           0
-                           (-> (long (reduce + (map * wp mat)))
-                               abs
-                               (min 255))))))
-      res)))
+  (let [px (pick-fn data len width)]
+    (loop [idx start
+           res []
+           ]
+      (if (< idx end)
+        (recur (inc idx)
+               (conj res (let [wp (map (fn [[ox oy]] (px idx ox oy)) offsets)]
+                           (if (some nil? wp)
+                             0
+                             (-> (long (reduce + (map * wp mat)))
+                                 abs
+                                 (min 255))))))
+        res))))
 
 #+clj
 (defn parallel-gray-convolve
