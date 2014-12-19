@@ -1,5 +1,5 @@
 (ns vijion.segment
-  (:require [vijion.util :refer :all]
+  (:require [vijion.util :refer [pick]]
             [vijion.util.dsf :as dsf-util]))
 
 (def ^:const sigma 0.5)
