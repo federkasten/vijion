@@ -1,9 +1,9 @@
 (ns vijion.test
-  (:require [vijion.core :as core]
+  (:require [domina :refer [by-id set-attr! set-classes! set-style! append! detach!]]
+            [domina.events :refer [listen! prevent-default]]
+            [vijion.core :as core]
             [vijion.filter :as filter]
-            [vijion.gray :as gray]
-            [domina :refer [by-id set-attr! set-classes! set-style! append! detach!]]
-            [domina.events :refer [listen! prevent-default]]))
+            [vijion.gray :as gray]))
 
 (def body (.-body js/document))
 
