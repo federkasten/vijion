@@ -1,5 +1,5 @@
 (ns vijion.segment
-  (:require [vijion.util :refer [pick]]
+  (:require [vijion.util :refer [pick sqrt]]
             [vijion.util.disjoint :as dj]))
 
 (def ^:const sigma 0.5)
@@ -12,9 +12,9 @@
 
 (defn- diff
   [src dst]
-  (Math/sqrt (+ (square (- (nth src 0) (nth dst 0)))
-                (square (- (nth src 1) (nth dst 1)))
-                (square (- (nth src 2) (nth dst 2))))))
+  (sqrt (+ (square (- (nth src 0) (nth dst 0)))
+           (square (- (nth src 1) (nth dst 1)))
+           (square (- (nth src 2) (nth dst 2))))))
 
 (defn- weight
   [data len width idx ox oy]

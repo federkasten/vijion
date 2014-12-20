@@ -37,3 +37,7 @@
 (def abs
   #+clj #(Math/abs %)
   #+cljs #(.abs js/Math %))
+
+(def sqrt
+  #+clj #(Math/sqrt %)
+  #+cljs #(.sqrt js/Math %))
