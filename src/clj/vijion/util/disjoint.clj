@@ -71,7 +71,7 @@
 (defn head
   [dsf x]
   (loop [x x]
-    (if-let [node (:nodes dsf x)]
+    (if-let [node (get (:nodes dsf) x)]
       (if-let [parent (:parent node)]
         (recur parent)
         x)

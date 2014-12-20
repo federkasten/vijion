@@ -1,6 +1,6 @@
 (ns vijion.segment
   (:require [vijion.util :refer [pick]]
-            [vijion.util.dsf :as dsf-util]))
+            [vijion.util.disjoint :as dj]))
 
 (def ^:const sigma 0.5)
 (def ^:const kappa 500)
@@ -56,22 +56,22 @@
 (defn segment
   [sorted-edges length]
   (loop [e (first sorted-edges)
-         dsf (apply dsf-util/make-dsf (range length))
+         dsf (dj/disjoint-set-forest (range length))
          threashold {}
          rest-edges (rest sorted-edges)]
     (if e
-      (let [ha (dsf (:a e))
-            hb (dsf (:b e))
+      (let [ha (dj/head dsf (:a e))
+            hb (dj/head dsf (:b e))
             ta (get threashold ha init-threashold)
             tb (get threashold hb init-threashold)]
         (if (and (not= ha hb)
                  (< (:w e) ta)
                  (< (:w e) tb))
-          (let [new-dsf (dsf-util/union dsf ha hb)
-                new-a (new-dsf ha)]
+          (let [new-dsf (dj/union dsf ha hb)
+                new-a (dj/head new-dsf ha)]
             (recur (first rest-edges)
                    new-dsf
-                   (conj threashold {new-a (+ (:w e) (/ kappa (dsf-util/size new-dsf new-a)))})
+                   (conj threashold {new-a (+ (:w e) (/ kappa (dj/size new-dsf new-a)))})
                    (rest rest-edges)))
           (recur (first rest-edges)
                  dsf
@@ -95,7 +95,7 @@
                   colors {}
                   data []]
              (if (< idx len)
-               (let [h (dsf idx)]
+               (let [h (dj/head dsf idx)]
                  (if-let [c (get colors h nil)]
                    (recur (inc idx)
                           colors
