@@ -13,8 +13,6 @@ This supports following functions:
 
 Copyright 2014 [Takashi AOKI][tak.sh]
 
-Disjoint-set forest codes (`vijion.util.dsf`) are forked from Jordan Lewis' [data.union-find](https://github.com/jordanlewis/data.union-find).
-
 Licensed under the [Apache License, Version 2.0][apache-license-2.0].
 
 [tak.sh]: http://tak.sh
