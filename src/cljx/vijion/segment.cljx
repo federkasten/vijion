@@ -53,7 +53,7 @@
 
 (def init-threashold (/ kappa 1))
 
-(defn segment
+(defn dsf-segment
   [sorted-edges length]
   (loop [e (first sorted-edges)
          dsf (dj/disjoint-set-forest (range length))
@@ -105,3 +105,12 @@
                             (conj colors {h new-c})
                             (conj data new-c)))))
                data))}))
+
+(defn segment
+  [color-image]
+  (let [w (:width color-image)
+        h (:height color-image)
+        edges (-> (make-edges color-image)
+                  sort-edges)
+        dsf (dsf-segment edges (* w h))]
+    (make-segment-image w h dsf)))
