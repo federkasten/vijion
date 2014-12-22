@@ -6,7 +6,7 @@
       width: 65px;
       height: 14px;
       background-size: 65px 14px;
-      background-image: url('/img/loading.gif');
+      background-image: url('./img/loading.gif');
       margin: 10px;
     }
     #control {
@@ -22,12 +22,12 @@
     <button id="segment">Segment</button>
     <button id="reset">Reset</button>
   </div>
-  <script type="text/javascript" src="/js/dev/goog/base.js"></script>
-  <script type="text/javascript" src="/js/vijion_dev.js"></script>
+  <script type="text/javascript" src="./js/dev/goog/base.js"></script>
+  <script type="text/javascript" src="./js/vijion_dev.js"></script>
   <script>
     goog.require('vijion.test');
     window.onload = function() {
-      vijion.test.bootstrap('view', '/img/lenna.png');
+      vijion.test.bootstrap('view', './img/lenna.png');
     };
   </script>
 </body>
